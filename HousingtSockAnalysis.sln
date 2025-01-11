@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35013.160
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "House.Common.DataContext.PostgreSQL", "House.Common.DataContext.PostgreSQL\House.Common.DataContext.PostgreSQL.csproj", "{89D8C6D1-E6E8-44C5-A0C5-48F2CA2EF9BE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "House.Common.EntityModels.PostgreSQL", "House.Common.EntityModels.PostgreSQL\House.Common.EntityModels.PostgreSQL.csproj", "{05CCAE57-046D-45C0-826B-4BD880ED6441}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HouseAnalysis", "HouseAnalysis\HouseAnalysis.csproj", "{F7B7A63E-3F86-4DEC-961B-31E3619AA40D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{89D8C6D1-E6E8-44C5-A0C5-48F2CA2EF9BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89D8C6D1-E6E8-44C5-A0C5-48F2CA2EF9BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89D8C6D1-E6E8-44C5-A0C5-48F2CA2EF9BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89D8C6D1-E6E8-44C5-A0C5-48F2CA2EF9BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05CCAE57-046D-45C0-826B-4BD880ED6441}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05CCAE57-046D-45C0-826B-4BD880ED6441}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05CCAE57-046D-45C0-826B-4BD880ED6441}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05CCAE57-046D-45C0-826B-4BD880ED6441}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7B7A63E-3F86-4DEC-961B-31E3619AA40D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7B7A63E-3F86-4DEC-961B-31E3619AA40D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7B7A63E-3F86-4DEC-961B-31E3619AA40D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7B7A63E-3F86-4DEC-961B-31E3619AA40D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9C86C97C-3C04-4B82-AE4A-A973BCF48394}
+	EndGlobalSection
+EndGlobal
