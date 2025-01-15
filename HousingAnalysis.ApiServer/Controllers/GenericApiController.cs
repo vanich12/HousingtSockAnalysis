@@ -1,6 +1,7 @@
 ﻿using HousingAnalysis.ApiServer.Repository.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using HousingAnalysis.ApiServer.Extension;
 using HousingAnalysis.ApiServer.Models;
 
 namespace HousingAnalysis.ApiServer.Controllers
@@ -13,6 +14,7 @@ namespace HousingAnalysis.ApiServer.Controllers
         private readonly ILogger<TEntity> _logger;
 
         #endregion
+
 
         [HttpGet]
         public virtual async Task<IActionResult> ListAll()
@@ -105,6 +107,12 @@ namespace HousingAnalysis.ApiServer.Controllers
             {
                 RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier
             };
+        }
+
+        public GenericApiController(ILogger<TEntity> logger, IGenericRepository<TEntity> repository)
+        {
+            this._logger = logger;
+            this._rep = repository;
         }
     }
 }

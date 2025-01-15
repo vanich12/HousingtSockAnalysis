@@ -40,6 +40,7 @@ namespace HousingAnalysis.ApiServer.Repository
             return items;
         }
 
+
         public async Task<TEntity> GetOne(Predicate<TEntity> predicate)
         {
             await foreach (var item in this._dbSet.AsAsyncEnumerable())
