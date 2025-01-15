@@ -7,9 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "House.Common.DataContext.Po
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "House.Common.EntityModels.PostgreSQL", "House.Common.EntityModels.PostgreSQL\House.Common.EntityModels.PostgreSQL.csproj", "{05CCAE57-046D-45C0-826B-4BD880ED6441}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HouseAnalysis", "HouseAnalysis\HouseAnalysis.csproj", "{F7B7A63E-3F86-4DEC-961B-31E3619AA40D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HousingAnalysis.ApiServer", "HousingAnalysis.ApiServer\HousingAnalysis.ApiServer.csproj", "{F73C9730-2F4E-4AE6-89A2-20E7D0D5F0CE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HousingAnalysis.ApiServer", "HousingAnalysis.ApiServer\HousingAnalysis.ApiServer.csproj", "{F73C9730-2F4E-4AE6-89A2-20E7D0D5F0CE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,10 +23,6 @@ Global
 		{05CCAE57-046D-45C0-826B-4BD880ED6441}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{05CCAE57-046D-45C0-826B-4BD880ED6441}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{05CCAE57-046D-45C0-826B-4BD880ED6441}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F7B7A63E-3F86-4DEC-961B-31E3619AA40D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F7B7A63E-3F86-4DEC-961B-31E3619AA40D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F7B7A63E-3F86-4DEC-961B-31E3619AA40D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F7B7A63E-3F86-4DEC-961B-31E3619AA40D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F73C9730-2F4E-4AE6-89A2-20E7D0D5F0CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F73C9730-2F4E-4AE6-89A2-20E7D0D5F0CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F73C9730-2F4E-4AE6-89A2-20E7D0D5F0CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
