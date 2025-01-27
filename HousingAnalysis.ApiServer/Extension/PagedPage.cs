@@ -39,6 +39,8 @@ namespace HousingAnalysis.ApiServer.Extension
         /// </summary>
         public List<T> Data { get; private set; }
 
+        public List<T> DataTemplate { get; set; }
+
         public PagedPage(List<T> items, int count, int pageNumber, int pageSize)
         {
             this.Data = items;

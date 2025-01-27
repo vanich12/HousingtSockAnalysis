@@ -7,12 +7,13 @@ namespace HousingAnalysis.ApiServer.Extension
     {
         const int maxPageSize = 50;
         private int _pageSize = 10;
+
         /// <summary>
         /// Номер страницы, нумерация начинается с 1
         /// </summary>
         [FromQuery(Name = "page")]
         [Range(1, int.MaxValue, ErrorMessage = "Укажите значение больше чем {1}")]
-        public int PageNumber { get; set; }
+        public int PageNumber { get; set; } = 1;
 
         /// <summary>
         /// Размер страницы, должен быть больше 0
