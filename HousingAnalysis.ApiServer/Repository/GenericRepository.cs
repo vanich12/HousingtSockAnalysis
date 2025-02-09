@@ -1,4 +1,5 @@
-﻿using HousingAnalysis.ApiServer.Repository.Interfaces;
+﻿using House.Common.EntityModels.PostgreSQL.Packt.Shared;
+using HousingAnalysis.ApiServer.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Packt.Shared;
 

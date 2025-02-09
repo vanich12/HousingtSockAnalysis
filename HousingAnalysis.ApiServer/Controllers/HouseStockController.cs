@@ -3,6 +3,7 @@ using HousingAnalysis.ApiServer.Repository;
 using HousingAnalysis.ApiServer.Repository.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Asp.Versioning;
+using House.Common.EntityModels.PostgreSQL.Packt.Shared;
 using Packt.Shared;
 
 namespace HousingAnalysis.ApiServer.Controllers
