@@ -20,7 +20,7 @@ namespace HousingAnalysis.ApiServer.Extension
 
         public string GenerateToken(User user)
         {
-            Claim[] claims = [new("userID",user.Id)];
+            Claim[] claims = [new("userID",user.Id.ToString())];
             var signingCredentials = new SigningCredentials(
                 new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_options.Key)), SecurityAlgorithms.HmacSha256);
 

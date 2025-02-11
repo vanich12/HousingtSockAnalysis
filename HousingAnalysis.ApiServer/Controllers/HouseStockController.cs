@@ -11,9 +11,9 @@ namespace HousingAnalysis.ApiServer.Controllers
     [ApiController]
     [Route("[controller]")]
     [ApiVersion("1.0")]
-    public class HouseStockController : GenericApiController<Property>
+    public class HouseStockController : GenericApiController<Offer>
     {
-        private readonly ILogger<Property> _logger;
+        private readonly ILogger<Offer> _logger;
         private readonly IHousePropertyRepository _houseRep;
 
         [HttpGet("paged")]
@@ -31,8 +31,8 @@ namespace HousingAnalysis.ApiServer.Controllers
             }
         }
 
-        public HouseStockController(ILogger<Property> logger, IHousePropertyRepository houseRepository,
-            IGenericRepository<Property> repository) : base(logger, repository)
+        public HouseStockController(ILogger<Offer> logger, IHousePropertyRepository houseRepository,
+            IGenericRepository<Offer> repository) : base(logger, repository)
         {
             this._houseRep = houseRepository;
             this._logger = logger;

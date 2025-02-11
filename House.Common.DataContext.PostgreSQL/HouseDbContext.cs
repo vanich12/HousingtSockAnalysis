@@ -15,257 +15,164 @@ public partial class HouseDbContext : DbContext
     {
     }
 
-    public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
+    public virtual DbSet<AddToFavorite> AddToFavorites { get; set; }
 
-    public virtual DbSet<AspNetRoleClaim> AspNetRoleClaims { get; set; }
+    public virtual DbSet<Address> Addresses { get; set; }
 
-    public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
+    public virtual DbSet<District> Districts { get; set; }
 
-    public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
+    public virtual DbSet<HistoryOfChange> HistoryOfChanges { get; set; }
 
-    public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
+    public virtual DbSet<LivingComplex> LivingComplexes { get; set; }
 
-    public virtual DbSet<AspNetUserToken> AspNetUserTokens { get; set; }
+    public virtual DbSet<Offer> Offers { get; set; }
 
-    public virtual DbSet<Liquidityresult> Liquidityresults { get; set; }
+    public virtual DbSet<TypeofHousing> TypeofHousings { get; set; }
 
-    public virtual DbSet<Marketdatum> Marketdata { get; set; }
-
-    public virtual DbSet<Property> Properties { get; set; }
-
-    public virtual DbSet<User?> Users { get; set; }
-
-    public virtual DbSet<Userinput> Userinputs { get; set; }
+    public virtual DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=HouseDB;Username=postgres;Password=123");
+        => optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=HouseStockAnalysis;Username=postgres;Password=123");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<AspNetRole>(entity =>
+        modelBuilder.Entity<AddToFavorite>(entity =>
         {
-            entity.HasIndex(e => e.NormalizedName, "RoleNameIndex").IsUnique();
+            entity.HasKey(e => e.Id).HasName("AddToFavorites_pkey");
 
-            entity.Property(e => e.Name).HasMaxLength(256);
-            entity.Property(e => e.NormalizedName).HasMaxLength(256);
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.OfferId)
+                .ValueGeneratedOnAdd()
+                .HasColumnName("offerId");
+            entity.Property(e => e.UserId)
+                .ValueGeneratedOnAdd()
+                .HasColumnName("userId");
+
+            entity.HasOne(d => d.Offer).WithMany(p => p.AddToFavorites)
+                .HasForeignKey(d => d.OfferId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("AddToFavorites_offerId_fkey");
+
+            entity.HasOne(d => d.User).WithMany(p => p.AddToFavorites)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("AddToFavorites_userId_fkey");
         });
 
-        modelBuilder.Entity<AspNetRoleClaim>(entity =>
+        modelBuilder.Entity<Address>(entity =>
         {
-            entity.HasIndex(e => e.RoleId, "IX_AspNetRoleClaims_RoleId");
+            entity.HasKey(e => e.Id).HasName("Address_pkey");
 
-            entity.HasOne(d => d.Role).WithMany(p => p.AspNetRoleClaims).HasForeignKey(d => d.RoleId);
+            entity.ToTable("Address");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.City).HasMaxLength(50);
+            entity.Property(e => e.DistrictId).ValueGeneratedOnAdd();
+            entity.Property(e => e.HouseNumber).HasMaxLength(20);
+            entity.Property(e => e.Street).HasMaxLength(50);
+
+            entity.HasOne(d => d.District).WithMany(p => p.Addresses)
+                .HasForeignKey(d => d.DistrictId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("Address_DistrictId_fkey");
         });
 
-        modelBuilder.Entity<AspNetUser>(entity =>
+        modelBuilder.Entity<District>(entity =>
         {
-            entity.HasIndex(e => e.NormalizedEmail, "EmailIndex");
+            entity.HasKey(e => e.Id).HasName("District_pkey");
 
-            entity.HasIndex(e => e.NormalizedUserName, "UserNameIndex").IsUnique();
+            entity.ToTable("District");
 
-            entity.Property(e => e.Email).HasMaxLength(256);
-            entity.Property(e => e.NormalizedEmail).HasMaxLength(256);
-            entity.Property(e => e.NormalizedUserName).HasMaxLength(256);
-            entity.Property(e => e.UserName).HasMaxLength(256);
-
-            entity.HasMany(d => d.Roles).WithMany(p => p.Users)
-                .UsingEntity<Dictionary<string, object>>(
-                    "AspNetUserRole",
-                    r => r.HasOne<AspNetRole>().WithMany().HasForeignKey("RoleId"),
-                    l => l.HasOne<AspNetUser>().WithMany().HasForeignKey("UserId"),
-                    j =>
-                    {
-                        j.HasKey("UserId", "RoleId");
-                        j.ToTable("AspNetUserRoles");
-                        j.HasIndex(new[] { "RoleId" }, "IX_AspNetUserRoles_RoleId");
-                    });
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Name).HasMaxLength(50);
         });
 
-        modelBuilder.Entity<AspNetUserClaim>(entity =>
+        modelBuilder.Entity<HistoryOfChange>(entity =>
         {
-            entity.HasIndex(e => e.UserId, "IX_AspNetUserClaims_UserId");
+            entity.HasKey(e => e.Id).HasName("HistoryOfChanges_pkey");
 
-            entity.HasOne(d => d.User).WithMany(p => p.AspNetUserClaims).HasForeignKey(d => d.UserId);
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.OfferId)
+                .ValueGeneratedOnAdd()
+                .HasColumnName("offerId");
+
+            entity.HasOne(d => d.Offer).WithMany(p => p.HistoryOfChanges)
+                .HasForeignKey(d => d.OfferId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("HistoryOfChanges_offerId_fkey");
         });
 
-        modelBuilder.Entity<AspNetUserLogin>(entity =>
+        modelBuilder.Entity<LivingComplex>(entity =>
         {
-            entity.HasKey(e => new { e.LoginProvider, e.ProviderKey });
+            entity.HasKey(e => e.Id).HasName("LivingComplex_pkey");
 
-            entity.HasIndex(e => e.UserId, "IX_AspNetUserLogins_UserId");
+            entity.ToTable("LivingComplex");
 
-            entity.Property(e => e.LoginProvider).HasMaxLength(128);
-            entity.Property(e => e.ProviderKey).HasMaxLength(128);
-
-            entity.HasOne(d => d.User).WithMany(p => p.AspNetUserLogins).HasForeignKey(d => d.UserId);
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.FullUrl)
+                .HasColumnType("character varying")
+                .HasColumnName("fullUrl");
+            entity.Property(e => e.Name).HasMaxLength(50);
         });
 
-        modelBuilder.Entity<AspNetUserToken>(entity =>
+        modelBuilder.Entity<Offer>(entity =>
         {
-            entity.HasKey(e => new { e.UserId, e.LoginProvider, e.Name });
+            entity.HasKey(e => e.Id).HasName("Offer_pkey");
 
-            entity.Property(e => e.LoginProvider).HasMaxLength(128);
-            entity.Property(e => e.Name).HasMaxLength(128);
+            entity.ToTable("Offer");
 
-            entity.HasOne(d => d.User).WithMany(p => p.AspNetUserTokens).HasForeignKey(d => d.UserId);
-        });
-
-        modelBuilder.Entity<Liquidityresult>(entity =>
-        {
-            entity.HasKey(e => e.ResultId).HasName("liquidityresults_pkey");
-
-            entity.ToTable("liquidityresults");
-
-            entity.Property(e => e.ResultId).HasColumnName("result_id");
-            entity.Property(e => e.CalculationDate)
-                .HasDefaultValueSql("CURRENT_TIMESTAMP")
-                .HasColumnType("timestamp without time zone")
-                .HasColumnName("calculation_date");
-            entity.Property(e => e.CashFlow)
-                .HasPrecision(10, 2)
-                .HasColumnName("cash_flow");
-            entity.Property(e => e.InputId).HasColumnName("input_id");
-            entity.Property(e => e.LiquidityScore)
-                .HasPrecision(10, 2)
-                .HasColumnName("liquidity_score");
-            entity.Property(e => e.NetIncome)
-                .HasPrecision(10, 2)
-                .HasColumnName("net_income");
-            entity.Property(e => e.Roi)
-                .HasPrecision(5, 2)
-                .HasColumnName("roi");
-
-            entity.HasOne(d => d.Input).WithMany(p => p.Liquidityresults)
-                .HasForeignKey(d => d.InputId)
-                .HasConstraintName("liquidityresults_input_id_fkey");
-        });
-
-        modelBuilder.Entity<Marketdatum>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("marketdata_pkey");
-
-            entity.ToTable("marketdata");
-
-            entity.Property(e => e.Id).HasMaxLength(256);
-            entity.Property(e => e.AverageRent)
-                .HasPrecision(10, 2)
-                .HasColumnName("average_rent");
-            entity.Property(e => e.City)
-                .HasMaxLength(100)
-                .HasColumnName("city");
-            entity.Property(e => e.Date).HasColumnName("date");
-            entity.Property(e => e.GrowthRate)
-                .HasPrecision(5, 2)
-                .HasColumnName("growth_rate");
-            entity.Property(e => e.RentalDemand).HasColumnName("rental_demand");
-            entity.Property(e => e.State)
-                .HasMaxLength(100)
-                .HasColumnName("state");
-            entity.Property(e => e.VacancyRate)
-                .HasPrecision(5, 2)
-                .HasColumnName("vacancy_rate");
-        });
-
-        modelBuilder.Entity<Property>(entity =>
-        {
-            entity.HasKey(e => e.PropertyId).HasName("properties_pkey");
-
-            entity.ToTable("properties");
-
-            entity.Property(e => e.PropertyId).HasColumnName("property_id");
-            entity.Property(e => e.AdditionalCosts)
-                .HasPrecision(10, 2)
-                .HasColumnName("additional_costs");
-            entity.Property(e => e.Address)
-                .HasMaxLength(255)
-                .HasColumnName("address");
-            entity.Property(e => e.AreaSqm)
-                .HasPrecision(10, 2)
-                .HasColumnName("area_sqm");
-            entity.Property(e => e.Bathrooms).HasColumnName("bathrooms");
-            entity.Property(e => e.Bedrooms).HasColumnName("bedrooms");
-            entity.Property(e => e.City)
-                .HasMaxLength(100)
-                .HasColumnName("city");
-            entity.Property(e => e.Description).HasColumnName("description");
-            entity.Property(e => e.Insurance)
-                .HasPrecision(10, 2)
-                .HasColumnName("insurance");
-            entity.Property(e => e.MaintenanceFees)
-                .HasPrecision(10, 2)
-                .HasColumnName("maintenance_fees");
-            entity.Property(e => e.PricePerMonth)
-                .HasPrecision(10, 2)
-                .HasColumnName("price_per_month");
-            entity.Property(e => e.PropertyType)
-                .HasMaxLength(100)
-                .HasColumnName("property_type");
-            entity.Property(e => e.State)
-                .HasMaxLength(100)
-                .HasColumnName("state");
-            entity.Property(e => e.Taxes)
-                .HasPrecision(10, 2)
-                .HasColumnName("taxes");
-            entity.Property(e => e.Utilities)
-                .HasPrecision(10, 2)
-                .HasColumnName("utilities");
-            entity.Property(e => e.YearBuilt).HasColumnName("year_built");
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.AddressId).ValueGeneratedOnAdd();
+            entity.Property(e => e.Jk)
+                .ValueGeneratedOnAdd()
+                .HasColumnName("jk");
+            entity.Property(e => e.Photos).HasColumnType("jsonb");
+            entity.Property(e => e.TypeofHousing).HasMaxLength(30);
+            entity.Property(e => e.YuarBuilt).HasColumnName("Yuar_built");
             entity.Property(e => e.ZipCode)
                 .HasMaxLength(20)
-                .HasColumnName("zip_code");
+                .HasColumnName("Zip_Code");
+
+            entity.HasOne(d => d.Address).WithMany(p => p.Offers)
+                .HasForeignKey(d => d.AddressId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("Offer_AddressId_fkey");
+
+            entity.HasOne(d => d.JkNavigation).WithMany(p => p.Offers)
+                .HasForeignKey(d => d.Jk)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("Offer_jk_fkey");
+
+            entity.HasOne(d => d.TypeofHousingNavigation).WithMany(p => p.Offers)
+                .HasForeignKey(d => d.TypeofHousing)
+                .HasConstraintName("Offer_TypeofHousing_fkey");
+        });
+
+        modelBuilder.Entity<TypeofHousing>(entity =>
+        {
+            entity.HasKey(e => e.Name).HasName("TypeofHousing_pkey");
+
+            entity.ToTable("TypeofHousing");
+
+            entity.Property(e => e.Name).HasMaxLength(30);
         });
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("Users_pkey");
+            entity.HasKey(e => e.Id).HasName("User_pkey");
 
-            entity.HasIndex(e => e.UserName, "UQ_Users_UserName").IsUnique();
+            entity.ToTable("User");
 
-            entity.Property(e => e.Id).HasMaxLength(256);
-            entity.Property(e => e.AccessFailedCount).HasDefaultValue(0);
-            entity.Property(e => e.CreatedAt).HasDefaultValueSql("now()");
-            entity.Property(e => e.Email).HasMaxLength(256);
-            entity.Property(e => e.EmailConfirmed).HasDefaultValue(false);
-            entity.Property(e => e.FirstName).HasMaxLength(100);
-            entity.Property(e => e.LastName).HasMaxLength(100);
-            entity.Property(e => e.LockoutEnabled).HasDefaultValue(false);
-            entity.Property(e => e.PhoneNumber).HasMaxLength(50);
-            entity.Property(e => e.PhoneNumberConfirmed).HasDefaultValue(false);
-            entity.Property(e => e.TwoFactorEnabled).HasDefaultValue(false);
-            entity.Property(e => e.UpdatedAt).HasDefaultValueSql("now()");
-            entity.Property(e => e.UserName).HasMaxLength(256);
-        });
-
-        modelBuilder.Entity<Userinput>(entity =>
-        {
-            entity.HasKey(e => e.InputId).HasName("userinput_pkey");
-
-            entity.ToTable("userinput");
-
-            entity.Property(e => e.InputId).HasColumnName("input_id");
-            entity.Property(e => e.CalculationDate)
-                .HasDefaultValueSql("CURRENT_TIMESTAMP")
-                .HasColumnType("timestamp without time zone")
-                .HasColumnName("calculation_date");
-            entity.Property(e => e.EstimatedExpenses)
-                .HasPrecision(10, 2)
-                .HasColumnName("estimated_expenses");
-            entity.Property(e => e.EstimatedRent)
-                .HasPrecision(10, 2)
-                .HasColumnName("estimated_rent");
-            entity.Property(e => e.ExpectedReturn)
-                .HasPrecision(5, 2)
-                .HasColumnName("expected_return");
-            entity.Property(e => e.InvestmentAmount)
-                .HasPrecision(10, 2)
-                .HasColumnName("investment_amount");
-            entity.Property(e => e.PropertyId).HasColumnName("property_id");
-            entity.Property(e => e.UserId).HasColumnName("user_id");
-
-            entity.HasOne(d => d.Property).WithMany(p => p.Userinputs)
-                .HasForeignKey(d => d.PropertyId)
-                .HasConstraintName("userinput_property_id_fkey");
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Email).HasColumnType("character varying");
+            entity.Property(e => e.FirstName).HasMaxLength(50);
+            entity.Property(e => e.LastName).HasMaxLength(50);
+            entity.Property(e => e.PasswordHash).HasMaxLength(20);
+            entity.Property(e => e.Phone).HasMaxLength(20);
+            entity.Property(e => e.Status)
+                .HasMaxLength(30)
+                .HasColumnName("status");
         });
 
         OnModelCreatingPartial(modelBuilder);

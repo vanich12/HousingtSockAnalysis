@@ -17,11 +17,10 @@ namespace HousingAnalysis.ApiServer.Services
         public async Task Register(string name, string email, string password)
         {
             var hashedPassword = _passwordHasher.Generate(password);
-            var id = Guid.NewGuid();
+       
             var user = new User()
             {
-                Id = id.ToString(),
-                UserName = name, 
+                FirstName = name, 
                 Email = email,
                 PasswordHash = hashedPassword
             };

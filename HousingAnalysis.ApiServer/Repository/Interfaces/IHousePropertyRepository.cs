@@ -4,7 +4,7 @@ using Packt.Shared;
 
 namespace HousingAnalysis.ApiServer.Repository.Interfaces
 {
-    public interface IHousePropertyRepository: IGenericRepository<Property>
+    public interface IHousePropertyRepository: IGenericRepository<Offer>
     {
         /// <summary>
         /// Пагинация предложений о продаже жилья
@@ -12,6 +12,6 @@ namespace HousingAnalysis.ApiServer.Repository.Interfaces
         /// <param name="page"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        Task<PagedPage<Property>> GetHousesByPage(int page, int pageSize);
+        Task<PagedPage<Offer>> GetHousesByPage(int page, int pageSize);
     }
 }
